@@ -8,6 +8,7 @@ import fachim.raphael.spring.learn.mongo.dto.user.UserInput;
 import fachim.raphael.spring.learn.mongo.services.profile.ProfileService;
 import fachim.raphael.spring.learn.mongo.services.question.QuestionService;
 import fachim.raphael.spring.learn.mongo.services.user.UserService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,11 +50,13 @@ public class MainController {
         return questionService.allByUserId(Long.valueOf(userId));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("question/up")
     public ResponseEntity<?> voteUp(@RequestBody Vote vote){
         return questionService.voteUp(vote);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("question/down")
     public ResponseEntity<?> voteDown(@RequestBody Vote vote){
         return questionService.voteDown(vote);
@@ -63,5 +66,15 @@ public class MainController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody Login login){
         return userService.login(login);
+    }
+
+    @GetMapping("question")
+    public ResponseEntity<?> allQuestions() {
+        return questionService.allPaginated(5);
+    }
+
+    @GetMapping("question/{id}")
+    public ResponseEntity<?> findQuestion(@PathVariable("id") String id) {
+        return questionService.findById(id);
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public static UserOutput userToUserOutput(User user){
-        return new UserOutput(user.getEmail(), user.getUser(), user.getActive());
+        return new UserOutput(user.getId(), user.getEmail(), user.getUser(), user.getActive());
     }
 
     public static User userInputToUser(UserInput userInput){
