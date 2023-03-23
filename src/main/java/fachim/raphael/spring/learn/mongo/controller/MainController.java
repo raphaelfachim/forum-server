@@ -40,6 +40,7 @@ public class MainController {
         return ResponseEntity.ok(profileService.create(profileInput));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("question")
     public ResponseEntity<?> createQuestion(@RequestBody QuestionInput questionInput) {
         return ResponseEntity.ok(questionService.create(questionInput));
