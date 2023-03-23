@@ -55,11 +55,6 @@ public class QuestionService {
     }
 
     public ResponseEntity<?> voteUp(Vote vote){
-        Optional<User> _user = userRepository.findById(vote.userId());
-        if(_user.isEmpty()) return ResponseEntity.status(204).body(
-                new GenericServerError(ErrorMessage.ERR3)
-        );
-
         Optional<Question> _question = questionRespository.findById(vote.questionId());
 
         if(_question.isEmpty()) return ResponseEntity.status(204).body(
@@ -67,6 +62,11 @@ public class QuestionService {
         );
 
         Question question = _question.get();
+
+        Optional<User> _user = userRepository.findById(question.getUserId());
+        if(_user.isEmpty()) return ResponseEntity.status(204).body(
+                new GenericServerError(ErrorMessage.ERR3)
+        );
 
         if(question.getVotesUp().contains(vote.userId())) {
             return ResponseEntity.status(204).body(new GenericServerError(ErrorMessage.ERR2));
@@ -84,11 +84,6 @@ public class QuestionService {
     }
 
     public ResponseEntity<?> voteDown(Vote vote){
-        Optional<User> _user = userRepository.findById(vote.userId());
-        if(_user.isEmpty()) return ResponseEntity.status(204).body(
-                new GenericServerError(ErrorMessage.ERR3)
-        );
-
         Optional<Question> _question = questionRespository.findById(vote.questionId());
 
         if(_question.isEmpty()) return ResponseEntity.status(204).body(
@@ -96,6 +91,11 @@ public class QuestionService {
         );
 
         Question question = _question.get();
+
+        Optional<User> _user = userRepository.findById(question.getUserId());
+        if(_user.isEmpty()) return ResponseEntity.status(204).body(
+                new GenericServerError(ErrorMessage.ERR3)
+        );
 
         if(question.getVotesDown().contains(vote.userId())) {
             return ResponseEntity.status(204).body(new GenericServerError(ErrorMessage.ERR2));
